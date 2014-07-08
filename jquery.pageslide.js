@@ -18,7 +18,7 @@
         _lastCaller;        // Used to keep track of last element to trigger pageslide
     
 	// If the pageslide element doesn't exist, create it
-    if( $pageslide.length == 0 ) {
+    if( $pageslide.length === 0 ) {
          $pageslide = $('<div />').attr( 'id', 'pageslide' )
                                   .css( 'display', 'none' )
                                   .appendTo( $('body') );
@@ -101,7 +101,7 @@
             e.preventDefault();
             e.stopPropagation();
             
-            if ( $pageslide.is(':visible') && $self[0] == _lastCaller ) {
+            if ( $pageslide.is(':visible') && $self[0] === _lastCaller ) {
                 // If we clicked the same element twice, toggle closed
                 $.pageslide.close();
             } else {                 
@@ -135,7 +135,7 @@
         var settings = $.extend({}, $.fn.pageslide.defaults, options);
 	    
 	    // Are we trying to open in different direction?
-        if( $pageslide.is(':visible') && $pageslide.data( 'direction' ) != settings.direction) {
+        if( $pageslide.is(':visible') && $pageslide.data( 'direction' ) !== settings.direction) {
             $.pageslide.close(function(){
                 _load( settings.href, settings.iframe );
                 _start( settings.direction, settings.speed );
@@ -148,7 +148,7 @@
         }
         
         $pageslide.data( settings );
-	}
+	};
 	
 	// Close the pageslide
 	$.pageslide.close = function( callback ) {
@@ -156,7 +156,7 @@
             slideWidth = $pageslide.outerWidth( true ),
             speed = $pageslide.data( 'speed' ),
             bodyAnimateIn = {},
-            slideAnimateIn = {}
+            slideAnimateIn = {};
             	        
         // If the slide isn't open, just ignore the call
         if( $pageslide.is(':hidden') || _sliding ) return;	        
@@ -177,9 +177,9 @@
         $body.animate(bodyAnimateIn, speed, function() {
             $pageslide.hide();
             _sliding = false;
-            if( typeof callback != 'undefined' ) callback();
+            if( typeof callback !== 'undefined' ) callback();
         });
-    }
+    };
 	
 	/* Events */
 	
@@ -189,9 +189,9 @@
     });
 
 	// Close the pageslide if the document is clicked or the users presses the ESC key, unless the pageslide is modal
-	$(document).bind('click keyup', function(e) {
+	$(document).on('click keyup touchmove touchstart', function(e) {
 	    // If this is a keyup event, let's see if it's an ESC key
-        if( e.type == "keyup" && e.keyCode != 27) return;
+        if( e.type === "keyup" && e.keyCode !== 27) return;
 	    
 	    // Make sure it's visible, and we're not modal	    
 	    if( $pageslide.is( ':visible' ) && !$pageslide.data( 'modal' ) ) {	        
